@@ -10,9 +10,9 @@ from vmess import Vmess
 
 
 UPDATE_GITHUB = True
-CLASH_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/clash.yml"
-QUANTUMULT_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/quantumult.txt"
-V2RAY_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/v2ray.txt"
+CLASH_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/clash.yml"
+QUANTUMULT_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/quantumult.txt"
+V2RAY_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/v2ray.txt"
 
 
 def aes_decrypt(text):
@@ -41,20 +41,6 @@ def get_enc_text():
         print("从API获取数据出错:", e)
         return False
 
-
-vmess_exp = {
-    "add": "46.182.107.27",
-    "aid": "64",
-    "host": "www.59299999.xyz",
-    "id": "3e016c4d-986e-42df-838c-6046f3d89ecf",
-    "net": "ws",
-    "path": "/footers",
-    "port": 443,
-    "ps": "Netherlands-46.182.107.27-426",
-    "tls": "tls",
-    "type": "dtls",
-    "v": "2",
-}
 
 if __name__ == "__main__":
     links = set()
@@ -93,7 +79,7 @@ if __name__ == "__main__":
         }
         clash_links.update({vmess.config["ps"]: clash})
     # 保存vmess for v2ray
-    with open("v2ray.txt", "w", encoding="utf-8") as f:
+    with open("subscriptions/v2ray.txt", "w", encoding="utf-8") as f:
         v2ray = "\n".join(v for v in sorted(vmess_links))
         f.write(v2ray)
         print("文件v2ray.txt保存成功！")
@@ -111,7 +97,7 @@ if __name__ == "__main__":
                 grp["proxies"].append(name)
             else:
                 grp["proxies"] = [name]
-    with open("clash.yml", encoding="utf-8", mode="w") as f:
+    with open("subscriptions/clash.yml", encoding="utf-8", mode="w") as f:
         clash_yaml = yaml.dump(data, f, allow_unicode=True)
         print("文件clash.yml保存成功！")
 
@@ -159,7 +145,7 @@ if __name__ == "__main__":
         qtm_configs.append(qtm_config)
     quantumult = "\r".join(qtm_configs)
     quantumult = bs64_encode(quantumult)
-    with open("quantumult.txt", encoding="utf-8", mode="w") as f:
+    with open("subscriptions/quantumult.txt", encoding="utf-8", mode="w") as f:
         f.write(quantumult)
         print("文件quantumult.txt保存成功！")
 
