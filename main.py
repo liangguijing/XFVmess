@@ -44,7 +44,7 @@ def get_enc_text():
 
 if __name__ == "__main__":
     links = set()
-    for i in range(50):
+    for i in range(2):
         enc_text = get_enc_text()
         if not enc_text:  # 跳过API获取出错
             continue
@@ -98,7 +98,8 @@ if __name__ == "__main__":
             else:
                 grp["proxies"] = [name]
     with open("subscriptions/clash.yml", encoding="utf-8", mode="w") as f:
-        clash_yaml = yaml.dump(data, f, allow_unicode=True)
+        yaml.dump(data, f, allow_unicode=True)
+        clash_yaml = yaml.dump(data, allow_unicode=True)
         print("文件clash.yml保存成功！")
 
     # 保存Quantumult for ios quantumult
