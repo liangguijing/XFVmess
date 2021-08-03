@@ -44,7 +44,7 @@ def get_enc_text():
 
 if __name__ == "__main__":
     links = set()
-    for i in range(2):
+    for i in range(50):
         enc_text = get_enc_text()
         if not enc_text:  # 跳过API获取出错
             continue
