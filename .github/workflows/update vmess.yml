@@ -4,6 +4,7 @@
 name: Update Vmess Files
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: 0 0 1/3 * *
 
