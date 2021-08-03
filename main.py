@@ -5,8 +5,14 @@ import time
 import yaml
 
 from Crypto.Cipher import AES
-from utils import bs64_encode, country_mapping, get_server_location
+from utils import bs64_encode, country_mapping, get_server_location, update_github_file
 from vmess import Vmess
+
+
+UPDATE_GITHUB = True
+CLASH_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/clash.yml"
+QUANTUMULT_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/quantumult.txt"
+V2RAY_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/v2ray.txt"
 
 
 def aes_decrypt(text):
@@ -88,8 +94,8 @@ if __name__ == "__main__":
         clash_links.update({vmess.config["ps"]: clash})
     # 保存vmess for v2ray
     with open("v2ray.txt", "w", encoding="utf-8") as f:
-        val = "\n".join(v for v in sorted(vmess_links))
-        f.write(val)
+        v2ray = "\n".join(v for v in sorted(vmess_links))
+        f.write(v2ray)
         print("文件v2ray.txt保存成功！")
 
     # 保存clash for clash
@@ -106,7 +112,7 @@ if __name__ == "__main__":
             else:
                 grp["proxies"] = [name]
     with open("clash.yml", encoding="utf-8", mode="w") as f:
-        yaml.dump(data, f, allow_unicode=True)
+        clash_yaml = yaml.dump(data, f, allow_unicode=True)
         print("文件clash.yml保存成功！")
 
     # 保存Quantumult for ios quantumult
@@ -115,7 +121,7 @@ if __name__ == "__main__":
     # 🇺🇸 United States-142.0.136.171-328 = vmess, 142.0.136.171, 443, chacha20-ietf-poly1305,
     # "3f2ed494-f7a0-4563-bba5-4ab42fde87e6", group=V2RayProvider, over-tls=true, tls-host=www.acc913.xyz,
     # certificate=1, obfs=ws, obfs-path="/footers", obfs-header="Host: www.acc913.xyz"
-    quantumult = []
+    qtm_configs = []
     ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 " \
          "(KHTML, like Gecko) Mobile/16A5366a"
     for vmess in vmess_links:
@@ -150,9 +156,16 @@ if __name__ == "__main__":
         qtm_config = v_config["ps"] + " = " + ",".join(qtm)
         qtm_config = bs64_encode(qtm_config)
         qtm_config = "vmess://" + qtm_config
-        quantumult.append(qtm_config)
-    server_config = "\r".join(quantumult)
-    server_config = bs64_encode(server_config)
+        qtm_configs.append(qtm_config)
+    quantumult = "\r".join(qtm_configs)
+    quantumult = bs64_encode(quantumult)
     with open("quantumult.txt", encoding="utf-8", mode="w") as f:
-        f.write(server_config)
+        f.write(quantumult)
         print("文件quantumult.txt保存成功！")
+
+    # 更新github文件
+    if UPDATE_GITHUB:
+        token = input()
+        update_github_file(token, CLASH_URL, clash_yaml)
+        update_github_file(token, QUANTUMULT_URL, quantumult)
+        update_github_file(token, V2RAY_URL, v2ray)

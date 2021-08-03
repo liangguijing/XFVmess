@@ -53,9 +53,13 @@ def get_server_location(server):
         return response.json()["country"] + "-" + server
 
 
-def get_github_file_sha(url):
+def get_github_file_sha(token, url):
     url = url
-    response = requests.get(url).json()
+    headers = {
+        "accept": "application/vnd.github.v3+json",
+        "Authorization": "token " + token,
+    }
+    response = requests.get(url, headers=headers).json()
     if response.get("sha"):
         return response["sha"]
     return ""
@@ -69,12 +73,14 @@ def update_github_file(token, url, string):
     }
     data = {
         "content": bs64_encode(string),
-        "message": "Update",
-        "sha": get_github_file_sha(url)
+        "message": "update by actions",
+        "sha": get_github_file_sha(token, url)
     }
-    response = requests.put(url=url, headers=headers, json=data).json()
-    if response.get("content"):
-        print("file updated.")
+    resp = requests.put(url=url, headers=headers, json=data)
+    if resp.status_code == 200:
+        print(f"{ url } updated.")
+    else:
+        print(f"update { url }  failed!")
 
 
 country_mapping = {
