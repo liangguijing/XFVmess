@@ -6,28 +6,43 @@ port: 7890
 proxies:
 - alterId: '64'
   cipher: auto
-  name: 🇺🇸United States-198.2.217.216 740
+  name: 🇨🇳China-107.148.198.51 335
   network: ws
   port: 443
-  server: 198.2.217.216
+  server: 107.148.198.51
   skip-cert-verify: false
   tls: true
   type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  uuid: 4c7923df-700f-4bf2-918e-08c6e141037c
   ws-headers:
-    Host: www.95107441.xyz
+    Host: www.78577665.xyz
+  ws-path: /footers
+- alterId: '64'
+  cipher: auto
+  name: 🇺🇸United States-72.44.75.237 871
+  network: ws
+  port: 443
+  server: 72.44.75.237
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: ab9a54b1-2dc3-4905-8a72-430ce8965867
+  ws-headers:
+    Host: www.10068414.xyz
   ws-path: /footers
 proxy-groups:
 - name: PROXY
   proxies:
   - AUTO
   - DIRECT
-  - 🇺🇸United States-198.2.217.216 740
+  - 🇨🇳China-107.148.198.51 335
+  - 🇺🇸United States-72.44.75.237 871
   type: select
 - interval: 300
   name: AUTO
   proxies:
-  - 🇺🇸United States-198.2.217.216 740
+  - 🇨🇳China-107.148.198.51 335
+  - 🇺🇸United States-72.44.75.237 871
   tolerance: 50
   type: url-test
   url: http://www.gstatic.com/generate_204
