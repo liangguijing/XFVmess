@@ -14,7 +14,7 @@ class Vmess:
         self.subs = subs
         self._config = {}
 
-        self._get_vmess_config()
+        self._load_config()
 
     @property
     def shared_link(self):
@@ -26,7 +26,8 @@ class Vmess:
                 dGxzJywgJ2hvc3Q1OiAnd3d3LjA5MjE5NzYzNTQueHl6JywgJ3BhdGgnOiAnL2Zvb3RlcnMnLCAn
                 dGxzJzogJ3Rscyd9
         """
-        return "vmess://" + bs64_encode(get_unicode(str(self._config).replace("'", '"')))
+        # return "vmess://" + bs64_encode(get_unicode(str(self._config).replace("'", '"')))
+        return "vmess://" + bs64_encode(json.dumps(self._config, ensure_ascii=False, separators=(",", ":")))
 
     @property
     def config(self):
@@ -38,12 +39,7 @@ class Vmess:
         """
         return self._config
 
-    @config.setter
-    def config(self, v):
-        #  修改dict用不上这个方法
-        pass
-
-    def _get_vmess_config(self):
+    def _load_config(self):
         """
         通过分享链接获取Vmess配置
         """

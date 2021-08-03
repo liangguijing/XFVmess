@@ -7,16 +7,12 @@ import urllib.parse as urlparse
 
 
 def bs64_decode(string, encoding="utf-8"):
-    string += "=" * ((4 - len(string) % 4) % 4)
-    b = bytes(string, encoding)
-    d = base64.decodebytes(b)
-    return d.decode(encoding)
+    return base64.b64decode(string).decode(encoding)
 
 
 def bs64_encode(string, encoding="utf-8"):
     b = bytes(string, encoding)
-    d = base64.encodebytes(b)
-    return d.decode(encoding).replace("\n", "")
+    return base64.b64encode(b).decode(encoding)
 
 
 def get_unicode(string):
