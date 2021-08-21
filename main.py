@@ -103,7 +103,8 @@ if __name__ == "__main__":
         print("文件clash.yml保存成功！")
 
     # 保存Quantumult for ios quantumult
-    # ** ios \r为换行 **
+    # ** ios \r为换行 **  改\n
+    # +要替换为-
     # [SERVER] 格式
     # 🇺🇸 United States-142.0.136.171-328 = vmess, 142.0.136.171, 443, chacha20-ietf-poly1305,
     # "3f2ed494-f7a0-4563-bba5-4ab42fde87e6", group=V2RayProvider, over-tls=true, tls-host=www.acc913.xyz,
@@ -125,7 +126,8 @@ if __name__ == "__main__":
         obfs = "ws" if v_config["net"] == "ws" else "http"
         obfs_path = v_config.get("path", "/")
         obfs_header = str({"Host": tls_host}).replace("'", '"')
-        obfs_header += f"[Rr][Nn]User-Agent:{ ua }"
+        # 取消ua
+        # obfs_header += f"[Rr][Nn]User-Agent:{ ua }"
         qtm = [
             "vmess",
             f'{ add },{ port },{ scy },"{ uid }"',
@@ -142,9 +144,9 @@ if __name__ == "__main__":
             ])
         qtm_config = v_config["ps"] + " = " + ",".join(qtm)
         qtm_config = bs64_encode(qtm_config)
-        qtm_config = "vmess://" + qtm_config
+        qtm_config = "vmess://" + qtm_config.replace("+", "-")  # 转换，不清楚
         qtm_configs.append(qtm_config)
-    quantumult = "\r".join(qtm_configs)
+    quantumult = "\n".join(qtm_configs)
     quantumult = bs64_encode(quantumult)
     with open("subscriptions/quantumult.txt", encoding="utf-8", mode="w") as f:
         f.write(quantumult)

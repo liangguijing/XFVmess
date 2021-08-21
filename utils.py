@@ -7,7 +7,11 @@ import urllib.parse as urlparse
 
 
 def bs64_decode(string, encoding="utf-8"):
-    return base64.b64decode(string).decode(encoding)
+    """
+    -/ 避免网页编码+引起的问题
+    """
+    string += "=" * (4 - len(string) % 4)
+    return base64.b64decode(string, altchars=b"-/").decode(encoding)
 
 
 def bs64_encode(string, encoding="utf-8"):
