@@ -125,7 +125,7 @@ if __name__ == "__main__":
         # 混肴选项
         obfs = "ws" if v_config["net"] == "ws" else "http"
         obfs_path = v_config.get("path", "/")
-        obfs_header = str({"Host": tls_host}).replace("'", '"')
+        obfs_header = f'"Host: { tls_host }"'
         # 取消ua
         # obfs_header += f"[Rr][Nn]User-Agent:{ ua }"
         qtm = [
@@ -142,9 +142,9 @@ if __name__ == "__main__":
                 f"obfs-path={ obfs_path }",
                 f"obfs-header={ obfs_header }",
             ])
-        qtm_config = v_config["ps"] + " = " + ",".join(qtm)
+        qtm_config = v_config["ps"] + " = " + ", ".join(qtm)
         qtm_config = bs64_encode(qtm_config)
-        qtm_config = "vmess://" + qtm_config.replace("+", "-")  # 转换，不清楚
+        qtm_config = "vmess://" + qtm_config.replace("+", "-").replace("=", "")  # 转换，不清楚
         qtm_configs.append(qtm_config)
     quantumult = "\n".join(qtm_configs)
     quantumult = bs64_encode(quantumult)
