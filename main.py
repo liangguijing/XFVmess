@@ -10,7 +10,8 @@ from vmess import Vmess
 
 
 UPDATE_GITHUB = True
-CLASH_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/clash.yml"
+# CLASH_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/clash.yml"
+CLASH_URL = "https://api.github.com/repos/liangguijing/ss/contents/xf_clash"
 QUANTUMULT_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/quantumult.txt"
 V2RAY_URL = "https://api.github.com/repos/liangguijing/XFVmess/contents/subscriptions/v2ray.txt"
 
@@ -31,11 +32,19 @@ def aes_decrypt(text):
 def get_enc_text():
     """
     从API获取数据
+    备用API
+    https://www.jd9502042.xyz
+    https://www.jd1045261.xyz
+    https://www.jd8924368.xyz
     :return: 加密了的vmess链接
     """
     url = "https://www.jd7009724.xyz:20000/api/evmess"
+    header = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/90.0.4430.212 Safari/537.36"
+    }
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=header)
         return response.text
     except Exception as e:
         print("从API获取数据出错:", e)
@@ -50,7 +59,7 @@ if __name__ == "__main__":
             continue
         vmess = aes_decrypt(enc_text)
         links.add(vmess)
-        time.sleep(0.1)
+        time.sleep(2.1)
     print(f"已获取vmess链接:{len(links)}条")
     # 将备注改为"国家-IP 原来的编号"
     vmess_links = []
