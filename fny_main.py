@@ -72,3 +72,7 @@ if __name__ == "__main__":
     clash_url = "https://api.github.com/repos/liangguijing/ss/contents/clash"
     content = get_subscribe_content()
     update_github_file(_token, clash_url, content)
+    
+    clash_url = "https://api.github.com/repos/liangguijing/ss/contents/clash2"
+    content = get_subscribe_content()
+    update_github_file(_token, clash_url, content)
