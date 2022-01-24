@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-github action
+本地电脑运行
 """
 import base64
+import schedule
+import os
 import requests
 import time
-
+from multiprocessing import Process
 from requests import Session
 
 
@@ -77,8 +79,8 @@ def get_username():
 
 
 def main():
-    _token = input()
-
+    # _token = input()
+    _token = "44450171646b74164eba57617bddfbd9"
     clash_url = "https://gitee.com/api/v5/repos/liangguijing/plain-text/contents/clash1"
     content = get_subscribe_content()
     update_github_file(_token, clash_url, content)
@@ -90,5 +92,16 @@ def main():
     print("End", time.asctime())
 
 
+def run_subprocess():
+    process = Process(target=main)
+    process.start()
+    process.join()
+
+
 if __name__ == "__main__":
-    main()
+    os.system("title FNY")
+    run_subprocess()
+    schedule.every(4).hours.do(run_subprocess)
+
+    while True:
+        schedule.run_pending()
