@@ -21,6 +21,6 @@ jobs:
     - name: Run
       run: |
         token="${{ secrets.TOKEN }}"
-        python3 ./fny_main.py <<EOF
+        python3 ./fny_main_gitee.py <<EOF
         ${token}
         EOF
