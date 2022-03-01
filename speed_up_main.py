@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 def re_active_user(name):
     scraper = cloudscraper.create_scraper(browser='chrome')
     resp = scraper.get("https://3ups.xyz/reActiveUser?username=%s" % name)
+    print(resp.text)
     if resp.status_code == 200:
         print("get web page successfully.")
     soup = BeautifulSoup(resp.text, "html.parser")
