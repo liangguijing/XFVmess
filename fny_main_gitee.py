@@ -41,7 +41,7 @@ def update_github_file(token, url, string):
     if resp.status_code == 200:
         print(f"{ url } updated.")
     else:
-        print(f"update { url }  failed!")
+        print(f"update { url }  failed! code: { resp.status_code }. text: { resp.text }")
 
 
 def get_subscribe_content():
