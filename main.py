@@ -67,8 +67,8 @@ if __name__ == "__main__":
     for v in links:
         vmess = Vmess(v)
         alias = get_server_location(vmess.config["add"])  # "Netherlands-46.18.10.27"
-        emoji = country_mapping.get(alias.split("-")[0], "")
-        alias = f"{emoji}{alias} {str(vmess.config['ps'])}"  # "Netherlands-46.18.10.27 188"
+        # emoji = country_mapping.get(alias.split("-")[0], "")
+        alias = f"{alias} {str(vmess.config['ps'])}"  # "Netherlands-46.18.10.27 188"
         vmess.config["ps"] = alias
         vmess_links.append(vmess.shared_link)
 
