@@ -20,7 +20,7 @@ def get_gitee_file_sha(url):
         "accept": "application/json",
         "charset": "UTF-8",
     }
-    response = requests.get(url, headers=headers, timeout=10).json()
+    response = requests.get(url, headers=headers).json()
     if response.get("sha"):
         return response["sha"]
 
@@ -37,7 +37,7 @@ def update_github_file(token, url, string):
         "message": time.asctime(),
         "sha": get_gitee_file_sha(url)
     }
-    resp = requests.put(url=url, headers=headers, json=data, timeout=10)
+    resp = requests.put(url=url, headers=headers, json=data)
     if resp.status_code == 200:
         print(f"{ url } updated.")
     else:
@@ -49,7 +49,7 @@ def get_subscribe_content():
     session.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " \
                                     "(KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
     # 先获取cookie
-    session.get("https://feiniaoyun.xyz/", timeout=10)
+    session.get("https://feiniaoyun.xyz/")
     username = get_username()
     data = {
         "email": f"{username}@gmail.com",
@@ -61,7 +61,7 @@ def get_subscribe_content():
     resp = session.post("https://feiniaoyun.xyz/api/v1/passport/auth/register", data=data, timeout=10)
     print(resp.text)
     # 获取订阅链接
-    resp = session.get("https://feiniaoyun.xyz/api/v1/user/getSubscribe", timeout=10)
+    resp = session.get("https://feiniaoyun.xyz/api/v1/user/getSubscribe")
     print(resp.json())
     subscribe_url = resp.json()["data"]["subscribe_url"]
     print("sub url:", subscribe_url)
